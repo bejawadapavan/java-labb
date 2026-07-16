@@ -3,6 +3,7 @@ class zeroEx {
 
         int a = 20;
         int b = 0;
+        
         try {
             int result = a / b;
             System.out.println("Result = " + result);
