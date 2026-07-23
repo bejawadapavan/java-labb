@@ -1,0 +1,75 @@
+mysql> CREATE TABLE student (
+    ->     id INT PRIMARY KEY,
+    ->     name VARCHAR(50),
+    ->     age INT
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> CREATE DATABASE college;
+ERROR 1007 (HY000): Can't create database 'college'; database exists
+mysql> CREATE DATABASE IF NOT EXISTS college;
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> CREATE TABLE student (
+    ->     id INT PRIMARY KEY,
+    ->     name VARCHAR(50),
+    ->     age INT
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> CREATE DATABASE college;
+ERROR 1007 (HY000): Can't create database 'college'; database exists
+mysql> USE college;
+Database changed
+mysql> CREATE TABLE student (
+    ->     id INT PRIMARY KEY,
+    ->     name VARCHAR(50),
+    ->     age INT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO student VALUES (1,'Rajesh',19);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO student VALUES (2,'Ravi',20);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO student VALUES (1,'Kiran',21);
+ERROR 1062 (23000): Duplicate entry '1' for key 'student.PRIMARY'
+mysql> DESCRIBE student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(50) | YES  |     | NULL    |       |
+| age   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> DELETE FROM student WHERE id = 2;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM student;
++----+--------+------+
+| id | name   | age  |
++----+--------+------+
+|  1 | pavan  |   19 |
++----+--------+------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE student SET age = 21 WHERE id = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> ALTER TABLE student ADD marks INT;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_college |
++-------------------+
+| student           |
+| students          |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql>

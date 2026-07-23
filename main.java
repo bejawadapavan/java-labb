@@ -1,93 +1,54 @@
-interface Payable {
-    void processPayment(double amount);
-    String getPaymentDetails();
-    void refundPayment(double amount);
-}
+import java.util.Scanner;
 
-interface Taxable {
-    double calculateTax(double amount);
-    String getTaxDetails();
-}
+class Student {
+    String name;
+    int marks;
 
-interface Loggable {
-    void logActivity(String action);
-}
-
-class CreditCardPayment implements Payable, Taxable, Loggable {
-    private String cardNumber;
-    private String cardHolderName;
-    private double taxRate;
-
-    // Constructor
-    public CreditCardPayment(String cardNumber,
-                             String cardHolderName,
-                             double taxRate) {
-        this.cardNumber = cardNumber;
-        this.cardHolderName = cardHolderName;
-        this.taxRate = taxRate;
-    }
-
-    @Override
-    public void processPayment(double amount) {
-        double tax = calculateTax(amount);
-        double totalAmount = amount + tax;
-
-        System.out.println("Processing credit card payment...");
-        System.out.println("Amount: $" + amount);
-        System.out.println("Tax: $" + tax);
-        System.out.println("Total Amount: $" + totalAmount);
-
-        logActivity("Payment of $" + totalAmount + " processed.");
-    }
-
-    @Override
-    public String getPaymentDetails() {
-        return "Card Holder: " + cardHolderName +
-               "\nCard Number: " + cardNumber;
-    }
-
-    @Override
-    public void refundPayment(double amount) {
-        System.out.println("Refunding $" + amount +
-                           " to " + cardHolderName);
-        logActivity("Refund of $" + amount + " completed.");
-    }
-
-    @Override
-    public double calculateTax(double amount) {
-        return amount * taxRate;
-    }
-
-    @Override
-    public String getTaxDetails() {
-        return "Tax Rate: " + (taxRate * 100) + "%";
-    }
-
-    @Override
-    public void logActivity(String action) {
-        System.out.println("LOG: " + action);
+    Student(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        CreditCardPayment payment =
-                new CreditCardPayment(
-                        "1234-5678-9012-3456",
-                        "Pavan",
-                        0.18);
+        System.out.print("Enter number of students: ");
+        int n = sc.nextInt();
+        sc.nextLine();
 
-        System.out.println("----- Payment Details -----");
-        System.out.println(payment.getPaymentDetails());
+        Student[] students = new Student[n];
 
-        System.out.println("\n----- Tax Details -----");
-        System.out.println(payment.getTaxDetails());
+        // Input student details
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nEnter details of Student " + (i + 1));
 
-        System.out.println("\n----- Processing Payment -----");
-        payment.processPayment(1000);
+            System.out.print("Name: ");
+            String name = sc.nextLine();
 
-        System.out.println("\n----- Refund Payment -----");
-        payment.refundPayment(500);
+            System.out.print("Marks: ");
+            int marks = sc.nextInt();
+            sc.nextLine();
+
+            students[i] = new Student(name, marks);
+        }
+
+        // Display students with marks > 60
+        System.out.println("\nStudents with Marks > 60:");
+        boolean found = false;
+
+        for (Student s : students) {
+            if (s.marks > 60) {
+                System.out.println("Name: " + s.name + ", Marks: " + s.marks);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No student has marks greater than 60.");
+        }
+
+        sc.close();
     }
 }
